@@ -1,4 +1,4 @@
-﻿internal class AddDbContext
+internal class AddDbContext
 {
 public class CourseModel
     {
@@ -11,3 +11,4 @@ public class CourseModel
         }
     }
 }
+

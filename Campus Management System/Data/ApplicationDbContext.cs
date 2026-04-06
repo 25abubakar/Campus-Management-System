@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Campus_Management_System.Model;
+using Campus_Management_System.Models;
 namespace Campus_Management_System.Data
 {
     public class ApplicationDbContext : DbContext
@@ -10,7 +10,6 @@ namespace Campus_Management_System.Data
         {
         }
         // DbSets for your tables
-        DbSet<Campus_Management_System.Model.StudentModel> Students { get; set; }
-        DbSet<Campus_Management_System.Model.CourseModel> Courses { get; set;  }
+        DbSet<Campus_Management_System.Models.StudentCourseModel> Courses { get; set;  }
     }
 }

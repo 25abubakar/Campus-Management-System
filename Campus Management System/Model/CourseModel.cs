@@ -1,14 +1,22 @@
-﻿namespace Campus_Management_System.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Campus_Management_System.Model
 {
-    public class Course
+    public class CourseModel
     {
+        [Key]
         public int CourseId { get; set; }
 
-        public required string CourseName { get; set; }
-        public int CreditHours { get; set; }
-        public decimal Fee { get; set; }
+        [Required(ErrorMessage = "Course name is required")]
+        [StringLength(100)]
+        public string Name { get; set; }
 
-        // Navigation Property
-        public List<StudentCourseModel> StudentCourses { get; set; } = new();
+        [Required(ErrorMessage = "Credit Hours are required")]
+        [Range(1, 10, ErrorMessage = "Credit Hours must be between 1 and 10")]
+        public int CreditHours { get; set; }
+
+        [Required(ErrorMessage = "Fee is required")]
+        [Range(0, double.MaxValue, ErrorMessage = "Fee must be positive")]
+        public decimal Fee { get; set; }
     }
 }

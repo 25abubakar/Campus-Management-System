@@ -10,6 +10,7 @@ namespace Campus_Management_System.Data
         {
         }
         // DbSets for your tables
-        DbSet<Campus_Management_System.Model.StudentModel<> Students { get; set; }
+        DbSet<Campus_Management_System.Model.StudentModel> Students { get; set; }
+        DbSet<Campus_Management_System.Model.CourseModel> Courses { get; set;  }
     }
 }

@@ -5,6 +5,9 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+builder.Services.AddDbContext<CampusDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

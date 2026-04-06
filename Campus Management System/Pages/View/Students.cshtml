@@ -1,0 +1,44 @@
+﻿@page
+@model Campus_Management_System.Pages.Students.CreateModel
+@{
+    ViewData["Title"] = "Add Student";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Add New Student</h2>
+
+    <form method="post">
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Phone</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Date Of Birth</label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Gender</label><br />
+
+            <label><input type="radio" asp-for="Gender" value="Male" /> Male</label>
+            <label><input type="radio" asp-for="Gender" value="Female" /> Female</label>
+            <label><input type="radio" asp-for="Gender" value="Other" /> Other</label>
+
+        </div>
+
+    </form>
+</div>

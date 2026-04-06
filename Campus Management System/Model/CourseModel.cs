@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Campus_Management_System.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace Campus_Management_System.Model
 {
@@ -18,5 +21,46 @@ namespace Campus_Management_System.Model
         [Required(ErrorMessage = "Fee is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Fee must be positive")]
         public decimal Fee { get; set; }
+    }
+}
+
+
+
+// Pages/View/Students.cshtml.cs
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Campus_Management_System.Models; // adjust if your Student model lives elsewhere
+
+namespace Campus_Management_System.Pages.View
+{
+    public class StudentsModel : PageModel
+    {
+        [BindProperty]
+        public Student Student { get; set; }
+
+        public void OnGet()
+        {
+            Student = new Student();
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid) return Page();
+            // persist Student...
+            return RedirectToPage("/Index");
+        }
+    }
+}
+// Models/Student.cs
+namespace Campus_Management_System.Models
+{
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; }
     }
 }

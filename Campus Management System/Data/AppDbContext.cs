@@ -12,22 +12,37 @@ namespace Campus_Management_System.Data
 
         public DbSet<PersonModel> Persons { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<PersonCourse> PersonCourses { get; set; }
+        public DbSet<StudentCourse> StudentCourse { get; set; }
+        public DbSet<TeacherCourse> TeacherCourse { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PersonCourse>()
-                .HasKey(pc => new { pc.PersonId, pc.CourseId });
+            modelBuilder.Entity<StudentCourse>()
+                .HasKey(sc => new { sc.PersonId, sc.CourseId });
 
-            modelBuilder.Entity<PersonCourse>()
-                .HasOne(pc => pc.Person)
-                .WithMany(p => p.PersonCourses)
-                .HasForeignKey(pc => pc.PersonId);
+            modelBuilder.Entity<StudentCourse>()
+                .HasOne(sc => sc.Person)
+                .WithMany(p => p.StudentCourse)
+                .HasForeignKey(sc => sc.PersonId);
 
-            modelBuilder.Entity<PersonCourse>()
-                .HasOne(pc => pc.Course)
-                .WithMany(c => c.PersonCourses)
-                .HasForeignKey(pc => pc.CourseId);
+            modelBuilder.Entity<StudentCourse>()
+                .HasOne(sc => sc.Course)
+                .WithMany(c => c.StudentCourse)
+                .HasForeignKey(sc => sc.CourseId);
+
+
+            modelBuilder.Entity<TeacherCourse>()
+                .HasKey(tc => new { tc.PersonId, tc.CourseId });
+
+            modelBuilder.Entity<TeacherCourse>()
+                .HasOne(tc => tc.Person)
+                .WithMany(p => p.TeacherCourse)
+                .HasForeignKey(tc => tc.PersonId);
+
+            modelBuilder.Entity<TeacherCourse>()
+                .HasOne(tc => tc.Course)
+                .WithMany(c => c.TeacherCourse)
+                .HasForeignKey(tc => tc.CourseId);
         }
     }
 }

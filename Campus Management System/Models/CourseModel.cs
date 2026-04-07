@@ -13,5 +13,6 @@ namespace Campus_Management_System.Models
         public decimal Fee { get; set; }
 
         public required List<StudentCourse> StudentCourse { get; set; }
+        public required List<TeacherCourse> TeacherCourse { get; set; }
     }
 }

@@ -23,7 +23,9 @@ namespace Campus_Management_System.Models
             public string Gender { get; set; } = "";
             public string Role { get; set; } = "";
 
-            public List<PersonCourse> PersonCourses { get; set; } = new();  // <- add = new()
+            public List<StudentCourse> StudentCourses { get; set; } = new();
+            public List<TeacherCourse> TeacherCourse { get; set; } = new();
+
         }
     }
 }

@@ -1,0 +1,116 @@
+﻿@model Campus_Management_System.Models.PersonModel.Person
+
+    ViewData["Title"] = "Add Person";
+}
+<div class="container mt-4">
+    <h2 class="text-center">Add Course</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success text-center">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger text-center">
+            @TempData["Error"]
+        </div>
+    }
+
+    <form asp-action="OnlineCheckup" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Phone</label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>City</label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label><br />
+                <input type="radio" name="gender" value="Male"> Male
+                <input type="radio" name="gender" value="Female"> Female
+                <input type="radio" name="gender" value="Other"> Other
+            </div>
+
+            <div class="form-group">
+                <label>Role</label><br />
+    
+                <input type="radio" name="Role" value="Student"> Student
+                <input type="radio" name="Role" value="Teacher"> Teacher
+                <input type="radio" name="Role" value="SeniorTeacher"> Senior Teacher
+            </div>
+
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="age" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Date Of Birth</label>
+                <input type="date" id="DOB" class="form-control">
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+            Add Data
+        </button>
+
+    </form>
+
+    <hr />
+
+    <h4>Added Data</h4>
+
+    <table class="table table-bordered">
+        <tr class="table-dark">
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Role</th>
+            <th>City</th>
+            <th>Email</th>
+        </tr>
+
+        @foreach (var item in ViewBag.Appointments)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Phone</td>
+                <td>@item.Age</td>
+                <td>@item.Gender</td>
+                <td>@item.DOB</td>
+                <td>@item.Role</td>
+                <td>@item.City</td>
+                <td>@item.Email</td>
+            </tr>
+        }
+    </table>
+
+</div>

@@ -1,0 +1,7 @@
+﻿<label>Select Courses</label>
+<select name="CourseIds" multiple class="form-control">
+    @foreach (var course in ViewBag.Courses)
+    {
+        <option value="@course.CourseId">@course.CourseName</option>
+    }
+</select>

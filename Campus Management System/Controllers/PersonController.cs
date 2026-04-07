@@ -12,74 +12,101 @@ public class PersonController : Controller
         _context = context;
     }
 
-    public IActionResult persons()
+    public IActionResult Persons()
     {
         ViewBag.Courses = _context.Courses.ToList();
         return View();
     }
 
     [HttpPost]
-    public IActionResult OnlineCheckup(PersonModel person, int[] StudentCourseIds, int[] TeacherCourseIds)
+    public IActionResult SavePerson(
+        PersonModel person,
+        StudentModel student,
+        TeacherModel teacher,
+        int[] StudentCourseIds,
+        int[] TeacherCourseIds)
     {
         if (!ModelState.IsValid)
         {
             ViewBag.Courses = _context.Courses.ToList();
-            TempData["Error"] = "Please correct the errors in the form.";
-            return View(person);
+            return View("Persons", person);
         }
 
         using var transaction = _context.Database.BeginTransaction();
+
         try
         {
-
+            // 🔹 Save Person
             _context.Persons.Add(person);
             _context.SaveChanges();
 
-            if (StudentCourseIds != null)
+            // 🔹 Student Flow
+            if (person.Role == "Student")
             {
-                foreach (var cid in StudentCourseIds)
+                student.PersonId = person.PersonId;
+
+                _context.Students.Add(student);
+                _context.SaveChanges();
+
+                if (StudentCourseIds != null)
                 {
-                    _context.StudentCourse.Add(new StudentCourse
+                    foreach (var cid in StudentCourseIds)
                     {
-                        PersonId = PersonModel.Person.PersonID,
-                        CourseId = cid
-                    });
+                        _context.StudentCourses.Add(new StudentCourse
+                        {
+                            StudentId = student.StudentId,
+                            CourseId = cid
+                        });
+                    }
                 }
             }
 
-            if (TeacherCourseIds != null)
+            // 🔹 Teacher Flow
+            else if (person.Role == "Teacher")
             {
-                foreach (var cid in TeacherCourseIds)
+                teacher.PersonId = person.PersonId;
+
+                _context.Teachers.Add(teacher);
+                _context.SaveChanges();
+
+                if (TeacherCourseIds != null)
                 {
-                    _context.TeacherCourse.Add(new TeacherCourse
+                    foreach (var cid in TeacherCourseIds)
                     {
-                        PersonId = person.PersonId,
-                        CourseId = cid
-                    });
+                        _context.TeacherCourses.Add(new TeacherCourse
+                        {
+                            TeacherId = teacher.TeacherId,
+                            CourseId = cid
+                        });
+                    }
                 }
             }
 
             _context.SaveChanges();
             transaction.Commit();
-            TempData["Success"] = "Person added and courses assigned successfully!";
+
+            TempData["Success"] = "Saved successfully!";
             return RedirectToAction("Index");
         }
-        catch (DbUpdateException ex)
+        catch (Exception ex)
         {
             transaction.Rollback();
-            TempData["Error"] = "Database error: " + ex.Message;
+            TempData["Error"] = ex.Message;
+
             ViewBag.Courses = _context.Courses.ToList();
-            return View(person);
+            return View("Persons", person);
         }
     }
 
     public IActionResult Index()
     {
         var persons = _context.Persons
-            .Include(p => p.StudentCourse)
-                .ThenInclude(sc => sc.Course)
-            .Include(p => p.TeacherCourse)
-                .ThenInclude(tc => tc.Course)
+            .Include(p => p.Student)
+                .ThenInclude(s => s.StudentCourse)
+                    .ThenInclude(sc => sc.Course)
+            .Include(p => p.Teacher)
+                .ThenInclude(t => t.TeacherCourse)
+                    .ThenInclude(tc => tc.Course)
             .ToList();
 
         return View(persons);

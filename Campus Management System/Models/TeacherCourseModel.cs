@@ -1,11 +1,10 @@
-﻿namespace Campus_Management_System.Models
-{
-    public class TeacherCourse
-    {
-        public int PersonId { get; set; }
-        public required PersonModel Person { get; set; }
+﻿using Campus_Management_System.Models;
 
-        public required int CourseId { get; set; }
-        public required Course Course { get; set; }
-    }
+public class TeacherCourse
+{
+    public int TeacherId { get; set; }
+    public required TeacherModel Teacher { get; set; }
+
+    public int CourseId { get; set; }
+    public required Course Course { get; set; }
 }

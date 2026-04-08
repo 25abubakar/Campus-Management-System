@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-namespace Campus_Management_System.Models
-{
 
+namespace Campus_Management_System.Controllers
+{
     public class HomeController : Controller
     {
         public IActionResult Index()

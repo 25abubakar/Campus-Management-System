@@ -17,98 +17,83 @@ namespace Campus_Management_System.Controllers
         public IActionResult Persons()
         {
             ViewBag.Courses = _context.Courses.ToList();
-            return View();
+            return View(new PersonEntryViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SavePerson(
-            Person person,
-            Student student,
-            Teacher teacher,
-            int[] StudentCourseIds,
-            int[] TeacherCourseIds)
+        public IActionResult SavePerson(PersonEntryViewModel model)
         {
+            if (model == null || model.Person == null)
             {
-                if (person.Role == "Student")
-                {
-                    ModelState.ClearValidationState(nameof(teacher));
-                    ModelState.MarkFieldValid(nameof(teacher));
-                }
-                else if (person.Role == "Teacher" || person.Role == "SeniorTeacher")
-                {
-                    ModelState.ClearValidationState(nameof(student));
-                    ModelState.MarkFieldValid(nameof(student));
-                }
+                TempData["Error"] = "Data binding failed.";
+                return RedirectToAction("Persons");
+            }
 
-                if (!ModelState.IsValid)
+            if (model.Person.Role == "Student")
+            {
+                ModelState.Remove("Teacher");
+            }
+            else
+            {
+                ModelState.Remove("Student");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Courses = _context.Courses.ToList();
+                return View("Persons", model);
+            }
+
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                _context.Persons.Add(model.Person);
+                _context.SaveChanges();
+
+                if (model.Person.Role == "Student")
                 {
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
-                    foreach (var err in errors) { Console.WriteLine(err.ErrorMessage); }
-
-                    ViewBag.Courses = _context.Courses.ToList();
-                    return View("Persons", person);
-                }
-
-                using var transaction = _context.Database.BeginTransaction();
-
-                try
-                {
-                    _context.Persons.Add(person);
+                    model.Student.PersonId = model.Person.PersonId;
+                    _context.Students.Add(model.Student);
                     _context.SaveChanges();
 
-                    if (person.Role == "Student")
+                    if (model.SelectedCourseIds != null)
                     {
-                        _context.Students.Add(student);
-                        _context.SaveChanges();
-
-                        if (StudentCourseIds != null)
+                        foreach (var cid in model.SelectedCourseIds)
                         {
-                            foreach (var cid in StudentCourseIds)
-                            {
-                                _context.StudentCourses.Add(new StudentCourse
-                                {
-                                    StudentId = student.StudentId,
-                                    CourseId = cid
-                                });
-                            }
+                            _context.StudentCourses.Add(new StudentCourse { StudentId = model.Student.StudentId, CourseId = cid });
                         }
                     }
-                    else if (person.Role == "Teacher" || person.Role == "SeniorTeacher")
-                    {
-                        _context.Teachers.Add(teacher);
-                        _context.SaveChanges();
-
-                        if (TeacherCourseIds != null)
-                        {
-                            foreach (var cid in TeacherCourseIds)
-                            {
-                                _context.TeacherCourses.Add(new TeacherCourse
-                                {
-                                    TeacherId = teacher.TeacherId,
-                                    CourseId = cid
-                                });
-                            }
-                        }
-                    }
-
-                    _context.SaveChanges();
-                    transaction.Commit();
-
-                    TempData["Success"] = "Data saved successfully!";
-                    return RedirectToAction("Index");
                 }
-                catch (Exception ex)
+                else if (model.Person.Role == "Teacher" || model.Person.Role == "SeniorTeacher")
                 {
-                    transaction.Rollback();
-                    TempData["Error"] = "Error: " + ex.Message;
+                    model.Teacher.PersonId = model.Person.PersonId;
+                    _context.Teachers.Add(model.Teacher);
+                    _context.SaveChanges();
 
-                    ViewBag.Courses = _context.Courses.ToList();
-                    return View("Persons", person);
+                    if (model.SelectedCourseIds != null)
+                    {
+                        foreach (var cid in model.SelectedCourseIds)
+                        {
+                            _context.TeacherCourses.Add(new TeacherCourse { TeacherId = model.Teacher.TeacherId, CourseId = cid });
+                        }
+                    }
                 }
+
+                _context.SaveChanges();
+                transaction.Commit();
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                TempData["Error"] = "System Error: " + ex.Message;
+                ViewBag.Courses = _context.Courses.ToList();
+                return View("Persons", model);
             }
         }
-
+        
         public IActionResult Index()
         {
             var persons = _context.Persons

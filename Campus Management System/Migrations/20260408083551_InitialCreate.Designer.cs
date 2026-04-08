@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Campus_Management_System.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260408050124_InitialCreate")]
+    [Migration("20260408083551_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,30 @@ namespace Campus_Management_System.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CampusManagementSystem.Models.Person", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.Course", b =>
+                {
+                    b.Property<int>("CourseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CreditHours")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Fee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("CourseId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Campus_Management_System.Models.Person", b =>
                 {
                     b.Property<int>("PersonId")
                         .ValueGeneratedOnAdd()
@@ -68,30 +91,7 @@ namespace Campus_Management_System.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("Campus_Management_System.Models.Course", b =>
-                {
-                    b.Property<int>("CourseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
-
-                    b.Property<string>("CourseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CreditHours")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Fee")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("CourseId");
-
-                    b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("Student", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
@@ -122,7 +122,7 @@ namespace Campus_Management_System.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("StudentCourse", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.StudentCourse", b =>
                 {
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -137,7 +137,7 @@ namespace Campus_Management_System.Migrations
                     b.ToTable("StudentCourses");
                 });
 
-            modelBuilder.Entity("Teacher", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.Teacher", b =>
                 {
                     b.Property<int>("TeacherId")
                         .ValueGeneratedOnAdd()
@@ -153,9 +153,6 @@ namespace Campus_Management_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
@@ -170,7 +167,7 @@ namespace Campus_Management_System.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("TeacherCourse", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.TeacherCourse", b =>
                 {
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
@@ -185,18 +182,18 @@ namespace Campus_Management_System.Migrations
                     b.ToTable("TeacherCourses");
                 });
 
-            modelBuilder.Entity("Student", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.Student", b =>
                 {
-                    b.HasOne("CampusManagementSystem.Models.Person", "Person")
+                    b.HasOne("Campus_Management_System.Models.Person", "Person")
                         .WithOne("Students")
-                        .HasForeignKey("Student", "PersonId")
+                        .HasForeignKey("Campus_Management_System.Models.Student", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("StudentCourse", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.StudentCourse", b =>
                 {
                     b.HasOne("Campus_Management_System.Models.Course", "Course")
                         .WithMany("StudentCourse")
@@ -204,7 +201,7 @@ namespace Campus_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Student", "Student")
+                    b.HasOne("Campus_Management_System.Models.Student", "Student")
                         .WithMany("StudentCourse")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -215,18 +212,18 @@ namespace Campus_Management_System.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Teacher", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.Teacher", b =>
                 {
-                    b.HasOne("CampusManagementSystem.Models.Person", "Person")
+                    b.HasOne("Campus_Management_System.Models.Person", "Person")
                         .WithOne("Teachers")
-                        .HasForeignKey("Teacher", "PersonId")
+                        .HasForeignKey("Campus_Management_System.Models.Teacher", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("TeacherCourse", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.TeacherCourse", b =>
                 {
                     b.HasOne("Campus_Management_System.Models.Course", "Course")
                         .WithMany("TeacherCourse")
@@ -234,7 +231,7 @@ namespace Campus_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Teacher", "Teacher")
+                    b.HasOne("Campus_Management_System.Models.Teacher", "Teacher")
                         .WithMany("TeacherCourse")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -245,13 +242,6 @@ namespace Campus_Management_System.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("CampusManagementSystem.Models.Person", b =>
-                {
-                    b.Navigation("Students");
-
-                    b.Navigation("Teachers");
-                });
-
             modelBuilder.Entity("Campus_Management_System.Models.Course", b =>
                 {
                     b.Navigation("StudentCourse");
@@ -259,12 +249,19 @@ namespace Campus_Management_System.Migrations
                     b.Navigation("TeacherCourse");
                 });
 
-            modelBuilder.Entity("Student", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.Person", b =>
+                {
+                    b.Navigation("Students");
+
+                    b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("Campus_Management_System.Models.Student", b =>
                 {
                     b.Navigation("StudentCourse");
                 });
 
-            modelBuilder.Entity("Teacher", b =>
+            modelBuilder.Entity("Campus_Management_System.Models.Teacher", b =>
                 {
                     b.Navigation("TeacherCourse");
                 });

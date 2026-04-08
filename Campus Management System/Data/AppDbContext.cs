@@ -21,6 +21,13 @@ namespace Campus_Management_System.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Person>().ToTable("Person");
+            modelBuilder.Entity<Course>().ToTable("Course");
+            modelBuilder.Entity<Student>().ToTable("Student");
+            modelBuilder.Entity<Teacher>().ToTable("Teacher");
+            modelBuilder.Entity<StudentCourse>().ToTable("StudentCourse");
+            modelBuilder.Entity<TeacherCourse>().ToTable("TeacherCourse");
+
             modelBuilder.Entity<Student>()
                 .HasOne(s => s.Person)
                 .WithOne(p => p.Students)
@@ -57,14 +64,13 @@ namespace Campus_Management_System.Data
                 .WithMany(c => c.TeacherCourse)
                 .HasForeignKey(tc => tc.CourseId);
 
-           modelBuilder.Entity<Course>()
-               .Property(c => c.Fee)
-               .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<Course>()
+                .Property(c => c.Fee)
+                .HasColumnType("decimal(18,2)");
 
-            
-          modelBuilder.Entity<Teacher>()
-               .Property(t => t.Salary)
-               .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<Teacher>()
+                .Property(t => t.Salary)
+                .HasColumnType("decimal(18,2)");
         }
     }
 }

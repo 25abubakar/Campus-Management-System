@@ -3,17 +3,17 @@ using Campus_Management_System.Models;
 
 namespace Campus_Management_System.Models
 {
-public class Student
-{
-    public int StudentId { get; set; }
+    public class Student
+    {
+        public int StudentId { get; set; }
+        public int PersonId { get; set; }
 
-    public int PersonId { get; set; }
-    public Person? Person { get; set; }
+        public string Class { get; set; } = string.Empty;
+        public string Grade { get; set; } = string.Empty;
+        public string RollNumber { get; set; } = string.Empty;
 
-    public required string RollNumber { get; set; }
-    public required string Class { get; set; }
-    public required string Grade { get; set; }
-
-    public List<StudentCourse> StudentCourse { get; set; } = new();
+        public Person? Person { get; set; }
+        public ICollection<StudentCourse>? StudentCourse { get; set; }
 }
+
 }

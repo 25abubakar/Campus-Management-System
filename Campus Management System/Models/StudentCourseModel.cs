@@ -3,8 +3,8 @@
 public class StudentCourse
 {
     public int StudentId { get; set; }
-    public required StudentModel Student { get; set; }
+    public Student? Student { get; set; }
 
     public int CourseId { get; set; }
-    public required Course Course { get; set; }
+    public Course? Course { get; set; }
 }

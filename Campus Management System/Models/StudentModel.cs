@@ -1,11 +1,12 @@
 ﻿using Campus_Management_System.Models;
+using CampusManagementSystem.Models;
 
-public class StudentModel
+public class Student
 {
     public int StudentId { get; set; }
 
     public int PersonId { get; set; }
-    public required PersonModel Person { get; set; }
+    public Person? Person { get; set; }
 
     public required string RollNumber { get; set; }
     public required string Class { get; set; }

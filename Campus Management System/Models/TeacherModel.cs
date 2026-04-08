@@ -1,11 +1,11 @@
-﻿using Campus_Management_System.Models;
+﻿using CampusManagementSystem.Models;
 
-public class TeacherModel
+public class Teacher
 {
     public int TeacherId { get; set; }
 
     public int PersonId { get; set; }
-    public required PersonModel Person { get; set; }
+    public Person? Person { get; set; }
 
     public required string EmployeeNumber { get; set; }
     public required string Depatment { get; set; }

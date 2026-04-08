@@ -1,4 +1,9 @@
-﻿<label>Select Courses</label>
+﻿@model Campus_Management_System.Models.Course
+@{
+    ViewData["Title"] = "Add Course";
+}
+
+<label>Select Courses</label>
 <select name="CourseIds" multiple class="form-control">
     @foreach (var course in ViewBag.Courses)
     {

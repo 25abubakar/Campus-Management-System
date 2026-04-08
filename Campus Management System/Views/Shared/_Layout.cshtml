@@ -20,13 +20,10 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Add Person</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Course" asp-action="Index">Courses</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="AddCourse">Add Courses</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -36,7 +33,6 @@
             </div>
         </nav>
     </header>
-
     <main class="container mt-4 mb-4">
         @RenderBody()
     </main>

@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Campus_Management_System.Models;
+﻿using Campus_Management_System.Models;
+using CampusManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Campus_Management_System.Data
 {
@@ -10,10 +11,10 @@ namespace Campus_Management_System.Data
         {
         }
 
-        public DbSet<PersonModel> Persons { get; set; }
+        public DbSet<Person> Persons { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<StudentModel> Students { get; set; }
-        public DbSet<TeacherModel> Teachers { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
         public DbSet<TeacherCourse> TeacherCourses { get; set; }
 
@@ -21,15 +22,15 @@ namespace Campus_Management_System.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<StudentModel>()
+            modelBuilder.Entity<Student>()
                 .HasOne(s => s.Person)
-                .WithOne(p => p.Student)
-                .HasForeignKey<StudentModel>(s => s.PersonId);
+                .WithOne(p => p.Students)
+                .HasForeignKey<Student>(s => s.PersonId);
 
-            modelBuilder.Entity<TeacherModel>()
+            modelBuilder.Entity<Teacher>()
                 .HasOne(t => t.Person)
-                .WithOne(p => p.Teacher)
-                .HasForeignKey<TeacherModel>(t => t.PersonId);
+                .WithOne(p => p.Teachers)
+                .HasForeignKey<Teacher>(t => t.PersonId);
 
             modelBuilder.Entity<StudentCourse>()
                 .HasKey(sc => new { sc.StudentId, sc.CourseId });
@@ -56,6 +57,15 @@ namespace Campus_Management_System.Data
                 .HasOne(tc => tc.Course)
                 .WithMany(c => c.TeacherCourse)
                 .HasForeignKey(tc => tc.CourseId);
+
+           modelBuilder.Entity<Course>()
+               .Property(c => c.Fee)
+               .HasColumnType("decimal(18,2)");
+
+            
+          modelBuilder.Entity<Teacher>()
+               .Property(t => t.Salary)
+               .HasColumnType("decimal(18,2)");
         }
     }
 }

@@ -1,0 +1,110 @@
+﻿@model Campus_Management_System.Models.PersonEntryViewModel
+
+@{
+    ViewData["Title"] = "Add Person";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-center mb-4">Add Person</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["Success"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger text-center">@TempData["Error"]</div>
+    }
+
+    <form asp-action="SavePerson" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label>Name</label>
+                <input asp-for="Person.Name" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Email</label>
+                <input asp-for="Person.Email" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Phone</label>
+                <input asp-for="Person.Phone" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>City</label>
+                <input asp-for="Person.City" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Age</label>
+                <input asp-for="Person.Age" type="number" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Date Of Birth</label>
+                <input asp-for="Person.DOB" type="date" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Gender</label><br />
+                <input type="radio" asp-for="Person.Gender" value="Male" /> Male
+                <input type="radio" asp-for="Person.Gender" value="Female" /> Female
+                <input type="radio" asp-for="Person.Gender" value="Other" /> Other
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Role</label><br />
+                <input type="radio" asp-for="Person.Role" value="Student" /> Student
+                <input type="radio" asp-for="Person.Role" value="Teacher" /> Teacher
+                <input type="radio" asp-for="Person.Role" value="SeniorTeacher" /> Senior Teacher
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary w-100">Add Person</button>
+    </form>
+
+    <hr />
+
+    <h3 class="mt-4">All Persons</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Age</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Role</th>
+                <th>City</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.PersonsList)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Age</td>
+                    <td>@item.DOB?.ToString("yyyy-MM-dd")</td>
+                    <td>@item.Gender</td>
+                    <td>@item.Role</td>
+                    <td>@item.City</td>
+                    <td>@item.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

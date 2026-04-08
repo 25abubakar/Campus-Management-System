@@ -14,99 +14,44 @@ namespace Campus_Management_System.Controllers
             _context = context;
         }
 
-        public IActionResult Persons()
+        // SHOW PAGE
+        public IActionResult Index()
         {
-            ViewBag.Courses = _context.Courses.ToList();
-            return View(new PersonEntryViewModel());
+            PersonEntryViewModel vm = new PersonEntryViewModel();
+
+            vm.PersonsList = _context.Persons
+                .Include(p => p.Students)
+                .Include(p => p.Teachers)
+                .ToList();
+
+            return View(vm);
         }
 
+        // SAVE PERSON
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SavePerson(PersonEntryViewModel model)
+        public IActionResult SavePerson(PersonEntryViewModel vm)
         {
-            if (model == null || model.Person == null)
-            {
-                TempData["Error"] = "Data binding failed.";
-                return RedirectToAction("Persons");
-            }
-
-            if (model.Person.Role == "Student")
-            {
-                ModelState.Remove("Teacher");
-            }
-            else
-            {
-                ModelState.Remove("Student");
-            }
-
             if (!ModelState.IsValid)
             {
-                ViewBag.Courses = _context.Courses.ToList();
-                return View("Persons", model);
+                vm.PersonsList = _context.Persons.ToList();
+                return View("Index", vm);
             }
 
-            using var transaction = _context.Database.BeginTransaction();
             try
             {
-                _context.Persons.Add(model.Person);
+                _context.Persons.Add(vm.Person);
                 _context.SaveChanges();
 
-                if (model.Person.Role == "Student")
-                {
-                    model.Student!.PersonId = model.Person.PersonId;
-                    _context.Students.Add(model.Student);
-                    _context.SaveChanges();
-
-                    if (model.SelectedCourseIds != null)
-                    {
-                        foreach (var cid in model.SelectedCourseIds)
-                        {
-                            _context.StudentCourses.Add(new StudentCourse { StudentId = model.Student.StudentId, CourseId = cid });
-                        }
-                    }
-                }
-                else if (model.Person.Role == "Teacher" || model.Person.Role == "SeniorTeacher")
-                {
-                    model.Teacher!.PersonId = model.Person.PersonId;
-                    _context.Teachers.Add(model.Teacher);
-                    _context.SaveChanges();
-
-                    if (model.SelectedCourseIds != null)
-                    {
-                        foreach (var cid in model.SelectedCourseIds)
-                        {
-                            _context.TeacherCourses.Add(new TeacherCourse { TeacherId = model.Teacher.TeacherId, CourseId = cid });
-                        }
-                    }
-                }
-
-                _context.SaveChanges();
-                transaction.Commit();
-                TempData["Success"] = "Data saved successfully!";
+                TempData["Success"] = "Person Added Successfully!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
-                TempData["Error"] = "System Error: " + ex.Message;
-                ViewBag.Courses = _context.Courses.ToList();
-                return View("Persons", model);
+                TempData["Error"] = ex.Message;
+                vm.PersonsList = _context.Persons.ToList();
+                return View("Index", vm);
             }
-        }
-
-        public IActionResult Index()
-        {
-            var persons = _context.Persons
-                .Include(p => p.Students!)
-                    .ThenInclude(s => s.StudentCourse!)
-                        .ThenInclude(sc => sc.Course)
-                .Include(p => p.Teachers!)
-                    .ThenInclude(t => t.TeacherCourse!)
-                        .ThenInclude(tc => tc.Course)
-                .ToList();
-
-            ViewBag.Appointments = persons;
-            return View(persons);
         }
     }
 }

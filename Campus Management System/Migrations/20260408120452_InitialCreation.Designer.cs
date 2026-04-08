@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Campus_Management_System.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260408083551_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260408120452_InitialCreation")]
+    partial class InitialCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace Campus_Management_System.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course", (string)null);
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.Person", b =>
@@ -88,7 +88,7 @@ namespace Campus_Management_System.Migrations
 
                     b.HasKey("PersonId");
 
-                    b.ToTable("Persons");
+                    b.ToTable("Person", (string)null);
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.Student", b =>
@@ -119,7 +119,7 @@ namespace Campus_Management_System.Migrations
                     b.HasIndex("PersonId")
                         .IsUnique();
 
-                    b.ToTable("Students");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.StudentCourse", b =>
@@ -134,7 +134,7 @@ namespace Campus_Management_System.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("StudentCourses");
+                    b.ToTable("StudentCourse", (string)null);
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.Teacher", b =>
@@ -164,7 +164,7 @@ namespace Campus_Management_System.Migrations
                     b.HasIndex("PersonId")
                         .IsUnique();
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teacher", (string)null);
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.TeacherCourse", b =>
@@ -179,7 +179,7 @@ namespace Campus_Management_System.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("TeacherCourses");
+                    b.ToTable("TeacherCourse", (string)null);
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.Student", b =>

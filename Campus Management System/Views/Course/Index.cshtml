@@ -1,13 +1,66 @@
-﻿@model Campus_Management_System.Models.Course
-@{
-    ViewData["Title"] = "Course";
-}
-<h1 class="text-center">Add Course</h1>
+﻿@model Campus_Management_System.Models.CourseEntryViewModel
 
-<label>Select Courses</label>
-<select name="CourseIds" multiple class="form-control">
-    @foreach (var course in ViewBag.Courses)
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-center mb-4">Add Course</h2>
+
+    @if (TempData["Success"] != null)
     {
-        <option value="@course.CourseId">@course.CourseName</option>
+        <div class="alert alert-success text-center">@TempData["Success"]</div>
     }
-</select>
+
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label>Course Name</label>
+                <input asp-for="Course.CourseName" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Credit Hours</label>
+                <input asp-for="Course.CreditHours" type="number" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Course Fee</label>
+                <input asp-for="Course.Fee" type="number" class="form-control" />
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary w-100">Add Course</button>
+    </form>
+
+    <hr />
+
+    <h3>All Courses</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Course Name</th>
+                <th>Credit Hours</th>
+                <th>Fee</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.CoursesList)
+            {
+                <tr>
+                    <td>@item.CourseName</td>
+                    <td>@item.CreditHours</td>
+                    <td>@item.Fee</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

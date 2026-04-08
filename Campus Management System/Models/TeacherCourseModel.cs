@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Campus_Management_System.Models;
-
-namespace Campus_Management_System.Models
+﻿namespace Campus_Management_System.Models
 {
     public class TeacherCourse
     {

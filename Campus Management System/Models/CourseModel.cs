@@ -6,13 +6,14 @@ namespace Campus_Management_System.Models
     {
         public int CourseId { get; set; }
 
-        public required string CourseName { get; set; }
+        [Required]
+        public string CourseName { get; set; } = string.Empty;
 
         public int CreditHours { get; set; }
 
         public decimal Fee { get; set; }
 
-        public required List<StudentCourse> StudentCourse { get; set; }
-        public required List<TeacherCourse> TeacherCourse { get; set; }
+        public List<StudentCourse>? StudentCourse { get; set; }
+        public List<TeacherCourse>? TeacherCourse { get; set; }
     }
 }

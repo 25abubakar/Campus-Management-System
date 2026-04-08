@@ -1,12 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Campus_Management_System.Data;
+using Campus_Management_System.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Campus_Management_System.Controllers
 {
     public class TeacherCourseController : Controller
     {
+        private readonly AppDbContext _context;
+
+        public TeacherCourseController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var enrollments = _context.TeacherCourses
+                .Include(tc => tc.Teacher)
+                    .ThenInclude(t => t.Person)
+                .Include(tc => tc.Course)
+                .ToList();
+
+            return View(enrollments);
         }
     }
 }

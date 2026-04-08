@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Campus_Management_System.Models.TeacherCreateViewModel
+
+<div class="container mt-4">
+    <h2>Create Teacher Profile</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label>Select Person</label>
+            <select asp-for="Teacher.PersonId" class="form-control">
+                <option value="">-- Select Teacher --</option>
+                @foreach (var p in Model.TeacherPersons)
+                {
+                    <option value="@p.PersonId">@p.Name (@p.Email)</option>
+                }
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label>Subject</label>
+                <input asp-for="Teacher.Subject" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Qualification</label>
+                <input asp-for="Teacher.Qualification" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Salary</label>
+                <input asp-for="Teacher.Salary" class="form-control" />
+            </div>
+        </div>
+
+        <h4>Assign Courses</h4>
+        @foreach (var course in Model.Courses)
+        {
+            <div>
+                <input type="checkbox" name="SelectedCourseIds" value="@course.CourseId" />
+                @course.CourseName
+            </div>
+        }
+
+        <br />
+        <button class="btn btn-primary">Create Teacher</button>
+    </form>
+</div>

@@ -5,24 +5,35 @@ using Microsoft.AspNetCore.Mvc;
 public class CourseController : Controller
 {
     private readonly AppDbContext _context;
+
     public CourseController(AppDbContext context)
     {
         _context = context;
     }
 
+    // SHOW PAGE
     public IActionResult Index()
     {
-        return View(_context.Courses.ToList());
+        CourseEntryViewModel vm = new CourseEntryViewModel();
+        vm.CoursesList = _context.Courses.ToList();
+        return View(vm);
     }
 
+    // SAVE COURSE
     [HttpPost]
-    public IActionResult Create(Course course)
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(CourseEntryViewModel vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _context.Courses.Add(course);
-            _context.SaveChanges();
+            vm.CoursesList = _context.Courses.ToList();
+            return View("Index", vm);
         }
+
+        _context.Courses.Add(vm.Course);
+        _context.SaveChanges();
+
+        TempData["Success"] = "Course Added Successfully!";
         return RedirectToAction("Index");
     }
 }

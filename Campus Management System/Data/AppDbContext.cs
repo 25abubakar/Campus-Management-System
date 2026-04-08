@@ -1,5 +1,4 @@
 ﻿using Campus_Management_System.Models;
-using CampusManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Campus_Management_System.Data

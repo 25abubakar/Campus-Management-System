@@ -1,16 +1,21 @@
-﻿using CampusManagementSystem.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Campus_Management_System.Models;
 
-public class Teacher
+namespace Campus_Management_System.Models
 {
-    public int TeacherId { get; set; }
+    public class Teacher
+    {
+        public int TeacherId { get; set; }
 
-    public int PersonId { get; set; }
-    public Person? Person { get; set; }
+        public int PersonId { get; set; }
+        public Person? Person { get; set; }
 
-    public required string EmployeeNumber { get; set; }
-    public required string Depatment { get; set; }
-    public decimal Salary { get; set; }
-    public DateTime HireDate { get; set; }
+        public required string EmployeeNumber { get; set; }
+        public required string Depatment { get; set; }
+        public decimal Salary { get; set; }
+        public DateTime HireDate { get; set; }
 
-    public List<TeacherCourse> TeacherCourse { get; set; } = new();
+        public List<TeacherCourse> TeacherCourse { get; set; } = new();
+    }
 }
+

@@ -1,10 +1,14 @@
-﻿using Campus_Management_System.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Campus_Management_System.Models;
 
-public class TeacherCourse
+namespace Campus_Management_System.Models
 {
-    public int TeacherId { get; set; }
-    public Teacher? Teacher { get; set; }
+    public class TeacherCourse
+    {
+        public int TeacherId { get; set; }
+        public Teacher? Teacher { get; set; }
 
-    public int CourseId { get; set; }
-    public Course? Course { get; set; }
+        public int CourseId { get; set; }
+        public Course? Course { get; set; }
+    }
 }

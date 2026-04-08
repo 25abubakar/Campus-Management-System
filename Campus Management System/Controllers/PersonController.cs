@@ -1,6 +1,5 @@
 ﻿using Campus_Management_System.Data;
 using Campus_Management_System.Models;
-using CampusManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

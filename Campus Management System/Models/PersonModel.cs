@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CampusManagementSystem.Models
+namespace Campus_Management_System.Models
 {
     public class Person
     {

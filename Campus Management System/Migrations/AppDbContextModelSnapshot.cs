@@ -181,10 +181,6 @@ namespace Campus_Management_System.Migrations
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("TeacherId");
 
                     b.HasIndex("PersonId")

@@ -5,8 +5,6 @@
         public int TeacherId { get; set; }
 
         public int PersonId { get; set; }
-
-        public string Subject { get; set; } = string.Empty;
         public string Qualification { get; set; } = string.Empty;
         public decimal Salary { get; set; }
 

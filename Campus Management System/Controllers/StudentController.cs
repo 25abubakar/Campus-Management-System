@@ -33,7 +33,9 @@ namespace Campus_Management_System.Controllers
         {
             if (!ModelState.IsValid)
             {
-                vm.StudentPersons = _context.Persons.Where(p => p.Role == "Student").ToList();
+                vm.StudentPersons = _context.Persons
+                    .Where(p => p.Role == "Student")
+                    .ToList();
                 vm.Courses = _context.Courses.ToList();
                 return View("Index", vm);
             }

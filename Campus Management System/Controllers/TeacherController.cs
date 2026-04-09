@@ -13,7 +13,6 @@ namespace Campus_Management_System.Controllers
             _context = context;
         }
 
-        // SHOW PAGE
         public IActionResult Index()
         {
             TeacherCreateViewModel vm = new TeacherCreateViewModel();
@@ -27,7 +26,6 @@ namespace Campus_Management_System.Controllers
             return View(vm);
         }
 
-        // SAVE TEACHER PROFILE
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(TeacherCreateViewModel vm)
@@ -45,7 +43,6 @@ namespace Campus_Management_System.Controllers
             _context.Teachers.Add(vm.Teacher);
             _context.SaveChanges();
 
-            // MANY TO MANY
             if (vm.SelectedCourseIds != null)
             {
                 foreach (var courseId in vm.SelectedCourseIds)

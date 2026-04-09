@@ -1,90 +1,82 @@
-﻿@* @model Campus_Management_System.Models.Person
+﻿@* @model Campus_Management_System.Models.PersonEntryViewModel
 
 @{
     ViewData["Title"] = "Add Person";
 }
 
 <div class="container mt-4">
-    <h2 class="text-center">Add Person</h2>
+
+    <h2 class="text-center mb-4">Add Person</h2>
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success text-center">
-            @TempData["Success"]
-        </div>
+        <div class="alert alert-success text-center">@TempData["Success"]</div>
     }
 
     @if (TempData["Error"] != null)
     {
-        <div class="alert alert-danger text-center">
-            @TempData["Error"]
-        </div>
+        <div class="alert alert-danger text-center">@TempData["Error"]</div>
     }
 
-    <form asp-controller="Person" asp-action="SavePerson" method="post">
+    <form asp-action="SavePerson" method="post">
         @Html.AntiForgeryToken()
-        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
         <div class="row">
+
             <div class="col-md-6 mb-3">
                 <label>Name</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <input asp-for="Person.Name" class="form-control" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>Email</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <input asp-for="Person.Email" class="form-control" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>Phone</label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <input asp-for="Person.Phone" class="form-control" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>City</label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+                <input asp-for="Person.City" class="form-control" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>Age</label>
-                <input asp-for="Age" class="form-control" type="number" />
+                <input asp-for="Person.Age" type="number" class="form-control" value="" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>Date Of Birth</label>
-                <input asp-for="DOB" class="form-control" type="date" />
+                <input asp-for="Person.DOB" type="date" class="form-control" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>Gender</label><br />
-                <input type="radio" asp-for="Gender" value="Male" /> Male
-                <input type="radio" asp-for="Gender" value="Female" /> Female
-                <input type="radio" asp-for="Gender" value="Other" /> Other
+                <input type="radio" asp-for="Person.Gender" value="Male" /> Male
+                <input type="radio" asp-for="Person.Gender" value="Female" /> Female
+                <input type="radio" asp-for="Person.Gender" value="Other" /> Other
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>Role</label><br />
-                <input type="radio" asp-for="Role" value="Student" /> Student
-                <input type="radio" asp-for="Role" value="Teacher" /> Teacher
-                <input type="radio" asp-for="Role" value="SeniorTeacher" /> Senior Teacher
+                <input type="radio" asp-for="Person.Role" value="Student" /> Student
+                <input type="radio" asp-for="Person.Role" value="Teacher" /> Teacher
+                <input type="radio" asp-for="Person.Role" value="SeniorTeacher" /> Senior Teacher
             </div>
+
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">
-            Add Data
-        </button>
+        <button class="btn btn-primary w-100">Add Person</button>
     </form>
 
     <hr />
 
-    <h4>Added Data</h4>
+    <h3 class="mt-4">All Persons</h3>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead class="table-dark">
             <tr>
                 <th>Name</th>
@@ -97,23 +89,22 @@
                 <th>Email</th>
             </tr>
         </thead>
+
         <tbody>
-            @if (ViewBag.Appointments != null)
+            @foreach (var item in Model.PersonsList)
             {
-                foreach (var item in ViewBag.Appointments)
-                {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Phone</td>
-                        <td>@item.Age</td>
-                        <td>@item.DOB?.ToString("yyyy-MM-dd")</td>
-                        <td>@item.Gender</td>
-                        <td>@item.Role</td>
-                        <td>@item.City</td>
-                        <td>@item.Email</td>
-                    </tr>
-                }
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Age</td>
+                    <td>@item.DOB?.ToString("yyyy-MM-dd")</td>
+                    <td>@item.Gender</td>
+                    <td>@item.Role</td>
+                    <td>@item.City</td>
+                    <td>@item.Email</td>
+                </tr>
             }
         </tbody>
     </table>
+
 </div> *@

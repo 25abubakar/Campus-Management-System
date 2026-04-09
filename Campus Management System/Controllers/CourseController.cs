@@ -11,7 +11,6 @@ public class CourseController : Controller
         _context = context;
     }
 
-    // SHOW PAGE
     public IActionResult Index()
     {
         CourseEntryViewModel vm = new CourseEntryViewModel();
@@ -19,7 +18,6 @@ public class CourseController : Controller
         return View(vm);
     }
 
-    // SAVE COURSE
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(CourseEntryViewModel vm)

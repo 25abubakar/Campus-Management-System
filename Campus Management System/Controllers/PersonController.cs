@@ -14,7 +14,6 @@ namespace Campus_Management_System.Controllers
             _context = context;
         }
 
-        // SHOW PAGE
         public IActionResult Index()
         {
             PersonEntryViewModel vm = new PersonEntryViewModel();
@@ -27,7 +26,6 @@ namespace Campus_Management_System.Controllers
             return View(vm);
         }
 
-        // SAVE PERSON
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SavePerson(PersonEntryViewModel vm)

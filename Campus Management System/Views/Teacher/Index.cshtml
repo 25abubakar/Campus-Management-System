@@ -17,7 +17,7 @@
                 <option value="">-- Select Teacher --</option>
                 @foreach (var p in Model.TeacherPersons)
                 {
-                    <option value="@p.PersonId">@p.Name (@p.Email)</option>
+                    <option value="@p.PersonId">@p.Name</option>
                 }
             </select>
         </div>
@@ -35,7 +35,7 @@
 
             <div class="col-md-4 mb-3">
                 <label>Salary</label>
-                <input asp-for="Teacher.Salary" class="form-control" />
+                <input asp-for="Teacher.Salary" class="form-control" value="" />
             </div>
         </div>
 

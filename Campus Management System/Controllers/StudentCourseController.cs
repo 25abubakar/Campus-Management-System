@@ -13,7 +13,7 @@ namespace Campus_Management_System.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+         public IActionResult Index()
         {
             var enrollments = _context.StudentCourses
                 .Include(sc => sc.Student)

@@ -10,7 +10,7 @@ namespace Campus_Management_System.Models
 
         public string Class { get; set; } = string.Empty;
         public string Grade { get; set; } = string.Empty;
-        public int RollNumber { get; set; } 
+        public int? RollNumber { get; set; } 
 
         public Person? Person { get; set; }
         public ICollection<StudentCourse>? StudentCourse { get; set; }

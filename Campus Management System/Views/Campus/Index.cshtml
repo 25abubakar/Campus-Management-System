@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Campuses";
+}
+
+<div class="container-fluid">
+
+
+    <div class="mb-4">
+        <h1 class="fs-3">📊 Campus Analytics</h1>
+        <p class="text-muted">Welcome to Campus Management Analytics</p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 p-4 bg-primary text-white rounded-4">
+                <h6>Total Students</h6>
+                <h2>@ViewBag.TotalStudents</h2>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 p-4 bg-success text-white rounded-4">
+                <h6>Total Teachers</h6>
+                <h2>@ViewBag.TotalTeachers</h2>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 p-4 bg-warning text-white rounded-4">
+                <h6>Total Courses</h6>
+                <h2>@ViewBag.TotalCourses</h2>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 p-4 bg-dark text-white rounded-4">
+                <h6>Today's Attendance</h6>
+                <h2>@ViewBag.TodayAttendancePercent%</h2>
+            </div>
+        </div>
+    </div>
+</div>

@@ -51,5 +51,49 @@ namespace Campus_Management_System.Controllers
                 return View("Index", vm);
             }
         }
+
+            // Edit Form
+    public IActionResult Edit(int id)
+        {
+            var person = _context.Persons.Find(id);
+            if (person == null)
+                return NotFound();
+
+            var vm = new PersonEntryViewModel
+            {
+                Person = person,
+                PersonsList = _context.Persons.ToList()
+            };
+            return View("Index", vm);
+        }
+
+        // Update
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdatePerson(Person person)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Persons.Update(person);
+                _context.SaveChanges();
+                TempData["Success"] = "Person updated successfully!";
+                return RedirectToAction("Index");
+            }
+            TempData["Error"] = "Error updating person!";
+            return RedirectToAction("Index");
+        }
+
+        // Delete
+        public IActionResult Delete(int id)
+        {
+            var person = _context.Persons.Find(id);
+            if (person == null)
+                return NotFound();
+
+            _context.Persons.Remove(person);
+            _context.SaveChanges();
+            TempData["Success"] = "Person deleted successfully!";
+            return RedirectToAction("Index");
+        }
     }
 }

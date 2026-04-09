@@ -34,4 +34,16 @@ public class CourseController : Controller
         TempData["Success"] = "Course Added Successfully!";
         return RedirectToAction("Index");
     }
+    // Delete
+    public IActionResult Delete(int id)
+    {
+        var course = _context.Courses.Find(id);
+        if (course == null)
+            return NotFound();
+
+        _context.Courses.Remove(course );
+        _context.SaveChanges();
+        TempData["Success"] = "Course deleted successfully!";
+        return RedirectToAction("Index");
+    }
 }

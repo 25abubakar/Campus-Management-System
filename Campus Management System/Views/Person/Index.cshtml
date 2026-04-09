@@ -70,6 +70,7 @@
         </div>
 
         <button class="btn btn-primary w-100">Add Person</button>
+
     </form>
 
     <hr />
@@ -87,6 +88,8 @@
                 <th>Role</th>
                 <th>City</th>
                 <th>Email</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
         </thead>
 
@@ -102,6 +105,13 @@
                     <td>@item.Role</td>
                     <td>@item.City</td>
                     <td>@item.Email</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.PersonId">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.PersonId"
+                           onclick="return confirm('Are you sure you want to delete this person?');">Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>

@@ -14,12 +14,10 @@ namespace Campus_Management_System.Controllers
             _context = context;
         }
 
-        // SHOW PAGE
         public IActionResult Index()
         {
             StudentCreateViewModel vm = new StudentCreateViewModel();
 
-            // fetch persons WHERE Role = Student
             vm.StudentPersons = _context.Persons
                 .Where(p => p.Role == "Student")
                 .ToList();
@@ -29,7 +27,6 @@ namespace Campus_Management_System.Controllers
             return View(vm);
         }
 
-        // SAVE STUDENT PROFILE
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(StudentCreateViewModel vm)
@@ -44,7 +41,6 @@ namespace Campus_Management_System.Controllers
             _context.Students.Add(vm.Student);
             _context.SaveChanges();
 
-            // MANY TO MANY (StudentCourse)
             if (vm.SelectedCourseIds != null)
             {
                 foreach (var courseId in vm.SelectedCourseIds)

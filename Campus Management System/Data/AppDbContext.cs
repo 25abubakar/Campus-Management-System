@@ -10,6 +10,7 @@ namespace Campus_Management_System.Data
         {
         }
 
+        public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Student> Students { get; set; }

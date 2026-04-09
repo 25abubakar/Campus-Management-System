@@ -4,116 +4,214 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Campus Management System</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
     <style>
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background: #f4f7fb;
+            font-family: 'Segoe UI', sans-serif;
         }
-        main {
-            flex: 1;
+
+        main { flex: 1; }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(90deg,#0d6efd,#6610f2);
+            box-shadow: 0 4px 15px rgba(0,0,0,.15);
         }
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+        .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            margin-left: 10px;
+            transition: .3s;
+        }
+        .nav-link:hover {
+            color: #ffd43b !important;
+            transform: translateY(-1px);
+        }
+
+        /* MAIN CARD LOOK */
+        main.container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+        }
+
+        /* FOOTER */
         footer {
-            background-color: #f8f9fa;
+            background: rgba(255,255,255,.7);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #eaeaea;
             text-align: center;
-            padding: 10px 0;
-            border-top: 1px solid #dee2e6;
+            padding: 15px 0;
         }
+        footer img {
+            transition: .3s;
+        }
+        footer img:hover {
+            transform: scale(1.2);
+        }
+
+        /* BACK TO TOP */
         .btn-back-to-top {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            border: 2px solid black;
-            background-color: transparent;
-            color: black;
-            text-align: center;
-            line-height: 36px;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 1000;
-            transition: background 0.3s, color 0.3s;
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            font-size: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,.3);
+            transition: .3s;
         }
-
         .btn-back-to-top:hover {
-            background-color: grey;
-            color: white;
+            background: #6610f2;
+            transform: translateY(-3px);
         }
-       </style>
-        </head>
+    </style>
+</head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
-            <div class="container">
-                <a class="navbar-brand text-dark" asp-controller="Person" asp-action="Index">
-                    Campus Management System
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Person" asp-action="Index">Add Person</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Student" asp-action="Index">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="StudentCourse" asp-action="Index">Student Course</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Teacher" asp-action="Index">Teacher</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="TeacherCourse" asp-action="Index">Teacher Course</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Course" asp-action="Index">Course</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <main class="container mt-4 mb-4">
-        @RenderBody()
-    </main>
-    <footer>
-        <div class="mt-2">
-            &copy; @DateTime.Now.Year Campus Management. All rights reserved.
-            <a href="mailto:muhammadabubakarkhan1234@gmail.com" target="_blank" class="me-3">
-                <img src="~/images/mail.jpg" alt="Gmail" style="width:24px; height:24px; vertical-align:middle;">
-                </a>
-                <a href="https://github.com/25abubakar/Campus-Management-System" target="_blank">
-                    <img src="~/images/git.webp" alt="GitHub" style="width:24px; height:24px; vertical-align:middle;">
+
+<header>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" asp-controller="Person" asp-action="Index">
+            🎓 Campus MS
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-speedometer2"></i> Dashboard
                     </a>
-                </div>
-            </footer>
-            <a asp-action="Person" id="backToTop" class="btn-back-to-top">
-    ↑
-</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Person" asp-action="Index">
+                        <i class="bi bi-person-plus"></i> Person
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-mortarboard"></i> Students
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-controller="Student" asp-action="Index">Student List</a></li>
+                        <li><a class="dropdown-item" asp-controller="StudentCourse" asp-action="Index">Student Courses</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-mortarboard"></i> Teachers
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-controller="Teacher" asp-action="Index">Teacher List</a></li>
+                        <li><a class="dropdown-item" asp-controller="TeacherCourse" asp-action="Index">TeacherCourse</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Course" asp-action="Index">
+                        <i class="bi bi-book"></i> Courses
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Attendance" asp-action="Index">
+                        <i class="bi bi-card-checklist"></i> Attendance
+                    </a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav">
+
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Register">
+                            <i class="bi bi-person-plus"></i> Register
+                        </a>
+                    </li>
+                }
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            👋 Hello, @User.Identity.Name
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Logout">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+</nav>
+</header>
+
+<main class="container mt-4 mb-4">
+    @RenderBody()
+</main>
+
+<footer>
+    <div>
+        © @DateTime.Now.Year Campus Management — Made by Abubakar
+        <br />
+        <a href="mailto:muhammadabubakarkhan1234@gmail.com">
+            <img src="~/images/mail.jpg" width="26" alt="Email">
+        </a>
+        <a href="https://github.com/25abubakar/Campus-Management-System" target="_blank">
+            <img src="~/images/git.webp" width="26" alt="GitHub">
+        </a>
+    </div>
+</footer>
+
+<button id="backToTop" class="btn-back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</button>
+
 <script>
-document.getElementById("backToTop").addEventListener("click", function(e){
-    e.preventDefault();
+document.getElementById("backToTop").onclick = () =>
     window.scrollTo({ top: 0, behavior: 'smooth' });
-});
 </script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html>

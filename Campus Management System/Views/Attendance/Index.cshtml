@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Campus_Management_System.Models.Attendance>
+
+@{
+    ViewData["Title"] = "Attendance List";
+}
+
+<style>
+    .table-attendance {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,.1);
+    }
+
+    .badge-present {
+        background-color: #198754;
+        color: white;
+    }
+
+    .badge-absent {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<h2 class="mb-4">📋 Attendance Records</h2>
+
+<table class="table table-striped table-hover table-attendance">
+    <thead class="table-dark">
+        <tr>
+            <th>Student ID</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            int i = 1;
+            foreach (var a in Model)
+            {
+                <tr>
+                    <td>Student Id</td>
+                    <td>@a.Student.Person.Name
+                    <td>@a.Course.CourseName</td>
+                    <td>@a.Date.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (a.IsPresent)
+                        {
+                            <span class="badge badge-present">Present</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-absent">Absent</span>
+                        }
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No attendance records found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-success mt-3">
+    ➕ Mark New Attendance
+</a>

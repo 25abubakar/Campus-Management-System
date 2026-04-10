@@ -38,13 +38,11 @@ namespace Campus_Management_System.Controllers
 
             if (vm.Person.PersonId == 0)
             {
-                // ✅ ADD
                 _context.Persons.Add(vm.Person);
                 TempData["Success"] = "Person Added Successfully!";
             }
             else
             {
-                // ✅ UPDATE
                 var personInDb = _context.Persons.Find(vm.Person.PersonId);
 
                 if (personInDb == null)

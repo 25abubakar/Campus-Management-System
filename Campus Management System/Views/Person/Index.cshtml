@@ -1,12 +1,14 @@
 ﻿@model Campus_Management_System.Models.PersonEntryViewModel
 
 @{
-    ViewData["Title"] = "Add Person";
+    ViewData["Title"] = "Person Management";
 }
 
 <div class="container mt-4">
 
-    <h2 class="text-center mb-4">Add Person</h2>
+    <h2 class="text-center mb-4">
+        @(Model.Person.PersonId == 0 ? "Add Person" : "Edit Person")
+    </h2>
 
     @if (TempData["Success"] != null)
     {
@@ -20,6 +22,8 @@
 
     <form asp-action="SavePerson" method="post">
         @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="Person.PersonId" />
 
         <div class="row">
 
@@ -69,7 +73,9 @@
 
         </div>
 
-        <button class="btn btn-primary w-100">Add Person</button>
+        <button class="btn btn-primary w-100">
+            @(Model.Person.PersonId == 0 ? "Add Person" : "Update Person")
+        </button>
 
     </form>
 
@@ -105,12 +111,20 @@
                     <td>@item.Role</td>
                     <td>@item.City</td>
                     <td>@item.Email</td>
+
                     <td>
-                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.PersonId">Edit</a>
+                        <a class="btn btn-sm btn-warning"
+                           asp-action="Edit"
+                           asp-route-id="@item.PersonId">Edit</a>
                     </td>
+
                     <td>
-                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.PersonId"
-                           onclick="return confirm('Are you sure you want to delete this person?');">Delete</a>
+                        <a class="btn btn-sm btn-danger"
+                               asp-action="Delete"
+                               asp-route-id="@item.PersonId"
+                               onclick="return confirm('Are you sure?');">
+                            Delete
+                        </a>
                     </td>
                 </tr>
             }

@@ -24,17 +24,20 @@ namespace Campus_Management_System.Controllers
 
             return View(enrollments);
         }
-        // Delete
-        //    public IActionResult Delete(int id)
-        //    {
-        //        var teacherCourse = _context.TeacherCourses.Find(id);
-        //        if (teacherCourse == null)
-        //            return NotFound();
 
-        //        _context.TeacherCourses.Remove(teacherCourse);
-        //        _context.SaveChanges();
-        //        TempData["Success"] = "Teacher deleted successfully!";
-        //        return RedirectToAction("Index");
-        //    }
+        // Delete
+        public IActionResult Delete(int teacherId, int courseId)
+        {
+            var enrollment = _context.TeacherCourses.Find(teacherId, courseId);
+
+            if (enrollment == null)
+                return NotFound();
+
+            _context.TeacherCourses.Remove(enrollment);
+            _context.SaveChanges();
+
+            TempData["Success"] = "Course Assignment Removed successfully!";
+            return RedirectToAction("Index");
+        }
     }
 }

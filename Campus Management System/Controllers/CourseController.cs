@@ -1,4 +1,4 @@
-﻿using Campus_Management_System.Data;
+﻿﻿using Campus_Management_System.Data;
 using Campus_Management_System.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,7 +41,7 @@ public class CourseController : Controller
         if (course == null)
             return NotFound();
 
-        _context.Courses.Remove(course );
+        _context.Courses.Remove(course);
         _context.SaveChanges();
         TempData["Success"] = "Course deleted successfully!";
         return RedirectToAction("Index");

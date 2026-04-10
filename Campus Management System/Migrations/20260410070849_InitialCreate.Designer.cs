@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Campus_Management_System.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260409080423_FixPersonFields")]
-    partial class FixPersonFields
+    [Migration("20260410070849_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,7 +139,7 @@ namespace Campus_Management_System.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RollNumber")
+                    b.Property<int?>("RollNumber")
                         .HasColumnType("int");
 
                     b.HasKey("StudentId");
@@ -158,9 +158,17 @@ namespace Campus_Management_System.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentCourseCourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentCourseStudentId")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId", "CourseId");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentCourseStudentId", "StudentCourseCourseId");
 
                     b.ToTable("StudentCourse", (string)null);
                 });
@@ -250,6 +258,10 @@ namespace Campus_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Campus_Management_System.Models.StudentCourse", null)
+                        .WithMany("StudentsCourse")
+                        .HasForeignKey("StudentCourseStudentId", "StudentCourseCourseId");
+
                     b.Navigation("Course");
 
                     b.Navigation("Student");
@@ -302,6 +314,11 @@ namespace Campus_Management_System.Migrations
             modelBuilder.Entity("Campus_Management_System.Models.Student", b =>
                 {
                     b.Navigation("StudentCourse");
+                });
+
+            modelBuilder.Entity("Campus_Management_System.Models.StudentCourse", b =>
+                {
+                    b.Navigation("StudentsCourse");
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.Teacher", b =>

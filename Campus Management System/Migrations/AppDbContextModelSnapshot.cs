@@ -155,9 +155,17 @@ namespace Campus_Management_System.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentCourseCourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentCourseStudentId")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId", "CourseId");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentCourseStudentId", "StudentCourseCourseId");
 
                     b.ToTable("StudentCourse", (string)null);
                 });
@@ -247,6 +255,10 @@ namespace Campus_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Campus_Management_System.Models.StudentCourse", null)
+                        .WithMany("StudentsCourse")
+                        .HasForeignKey("StudentCourseStudentId", "StudentCourseCourseId");
+
                     b.Navigation("Course");
 
                     b.Navigation("Student");
@@ -299,6 +311,11 @@ namespace Campus_Management_System.Migrations
             modelBuilder.Entity("Campus_Management_System.Models.Student", b =>
                 {
                     b.Navigation("StudentCourse");
+                });
+
+            modelBuilder.Entity("Campus_Management_System.Models.StudentCourse", b =>
+                {
+                    b.Navigation("StudentsCourse");
                 });
 
             modelBuilder.Entity("Campus_Management_System.Models.Teacher", b =>

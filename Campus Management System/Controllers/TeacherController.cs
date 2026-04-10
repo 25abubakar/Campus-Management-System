@@ -40,26 +40,39 @@ namespace Campus_Management_System.Controllers
                 return View("Index", vm);
             }
 
-            _context.Teachers.Add(vm.Teacher);
-            _context.SaveChanges();
+            var existingTeacher = _context.Teachers
+                .FirstOrDefault(t => t.PersonId == vm.Teacher.PersonId);
+
+            if (existingTeacher == null)
+            {
+                _context.Teachers.Add(vm.Teacher);
+                _context.SaveChanges();
+                existingTeacher = vm.Teacher;
+            }
 
             if (vm.SelectedCourseIds != null)
             {
                 foreach (var courseId in vm.SelectedCourseIds)
                 {
-                    TeacherCourse tc = new TeacherCourse()
-                    {
-                        TeacherId = vm.Teacher.TeacherId,
-                        CourseId = courseId
-                    };
+                    bool alreadyAssigned = _context.TeacherCourses
+                        .Any(x => x.TeacherId == existingTeacher.TeacherId && x.CourseId == courseId);
 
-                    _context.TeacherCourses.Add(tc);
+                    if (!alreadyAssigned)
+                    {
+                        TeacherCourse tc = new TeacherCourse()
+                        {
+                            TeacherId = existingTeacher.TeacherId,
+                            CourseId = courseId
+                        };
+
+                        _context.TeacherCourses.Add(tc);
+                    }
                 }
 
                 _context.SaveChanges();
             }
 
-            TempData["Success"] = "Teacher Created Successfully!";
+            TempData["Success"] = "🔥 Assighn Course To Teacher Successfully!";
             return RedirectToAction("Index");
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Campus_Management_System.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260410070849_InitialCreate")]
+    [Migration("20260410113809_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace Campus_Management_System.Migrations
 
                     b.Property<string>("CourseName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CreditHours")
                         .HasColumnType("int");
@@ -73,6 +73,9 @@ namespace Campus_Management_System.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("CourseId");
+
+                    b.HasIndex("CourseName")
+                        .IsUnique();
 
                     b.ToTable("Course", (string)null);
                 });
@@ -97,7 +100,7 @@ namespace Campus_Management_System.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -116,6 +119,9 @@ namespace Campus_Management_System.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PersonId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Person", (string)null);
                 });

@@ -17,7 +17,7 @@ namespace Campus_Management_System.Migrations
                 {
                     CourseId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreditHours = table.Column<int>(type: "int", nullable: false),
                     Fee = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -34,7 +34,7 @@ namespace Campus_Management_System.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -181,6 +181,18 @@ namespace Campus_Management_System.Migrations
                 name: "IX_Attendances_StudentId",
                 table: "Attendances",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Course_CourseName",
+                table: "Course",
+                column: "CourseName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_Email",
+                table: "Person",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Student_PersonId",

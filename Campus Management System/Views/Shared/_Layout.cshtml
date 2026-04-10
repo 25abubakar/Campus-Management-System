@@ -191,8 +191,7 @@
 
 <footer>
     <div>
-        © @DateTime.Now.Year Campus Management — Made by Abubakar
-        <br />
+        © @DateTime.Now.Year Campus Management - Made by Abubakar
         <a href="mailto:muhammadabubakarkhan1234@gmail.com">
             <img src="~/images/mail.jpg" width="26" alt="Email">
         </a>
@@ -216,3 +215,41 @@ document.getElementById("backToTop").onclick = () =>
 
 </body>
 </html>
+
+        <script>
+    document.getElementById("dob").addEventListener("change", function () {
+
+        var dob = new Date(this.value);
+        var today = new Date();
+
+        var age = today.getFullYear() - dob.getFullYear();
+        var monthDiff = today.getMonth() - dob.getMonth();
+
+        // adjust age if birthday not reached this year
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        document.getElementById("age").value = age;
+    });
+
+    function calculateAge() {
+        var dobInput = document.getElementById("dob");
+        if (!dobInput.value) return;
+
+        var dob = new Date(dobInput.value);
+        var today = new Date();
+
+        var age = today.getFullYear() - dob.getFullYear();
+        var monthDiff = today.getMonth() - dob.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        document.getElementById("age").value = age;
+    }
+
+    document.getElementById("dob").addEventListener("change", calculateAge);
+    window.onload = calculateAge;
+</script>

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Campus_Management_System.Models
 {
+    [Index(nameof(CourseName), IsUnique = true)]
     public class Course
     {
         public int CourseId { get; set; }

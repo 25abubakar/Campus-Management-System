@@ -4,7 +4,39 @@
     ViewData["Title"] = "Person Management";
 }
 
+<style>
+    .campus-bg {
+        background-image: url('/images/campus.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        padding: 30px;
+    }
+
+    .glass {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 15px;
+        padding: 25px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .card h6 {
+        font-weight: 600;
+        opacity: 0.9;
+    }
+
+    .card h2 {
+        font-weight: bold;
+    }
+</style>
+
 <div class="container mt-4">
+    <div class="container-fluid glass">
+    <div class="campus-bg">
+
+       
 
     <h2 class="text-center mb-4">
         @(Model.Person.PersonId == 0 ? "Add Person" : "Edit Person")
@@ -48,13 +80,13 @@
             </div>
 
             <div class="col-md-6 mb-3">
-                <label>Age</label>
-                <input asp-for="Person.Age" type="number" class="form-control" value="" />
+                <label>Date Of Birth</label>
+                <input asp-for="Person.DOB" id="dob" type="date" class="form-control" />
             </div>
 
             <div class="col-md-6 mb-3">
-                <label>Date Of Birth</label>
-                <input asp-for="Person.DOB" type="date" class="form-control" />
+                <label>Age</label>
+                <input asp-for="Person.Age" id="age" type="number" class="form-control" readonly />
             </div>
 
             <div class="col-md-6 mb-3">
@@ -131,4 +163,6 @@
         </tbody>
     </table>
 
+</div>
+</div>
 </div>

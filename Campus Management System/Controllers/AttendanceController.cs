@@ -39,14 +39,16 @@ namespace Campus_Management_System.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoadStudents(int CourseId, DateTime Date)
+        public IActionResult LoadStudents(int CourseId)
         {
+            DateTime today = DateTime.Today;
+
             bool alreadyMarked = _context.Attendances
-                .Any(a => a.CourseId == CourseId && a.Date.Date == Date.Date);
+                .Any(a => a.CourseId == CourseId && a.Date.Date == today);
 
             if (alreadyMarked)
             {
-                TempData["Error"] = "Attendance already marked for this date!";
+                TempData["Error"] = "Attendance already marked!";
                 return RedirectToAction("Index");
             }
 
@@ -63,7 +65,7 @@ namespace Campus_Management_System.Controllers
             AttendanceVM vm = new AttendanceVM
             {
                 CourseId = CourseId,
-                Date = Date,
+                Date = today,
                 Students = students
             };
 
@@ -73,6 +75,8 @@ namespace Campus_Management_System.Controllers
         [HttpPost]
         public IActionResult SaveAttendance(AttendanceVM vm)
         {
+            DateTime today = DateTime.Today;
+
             var allStudents = _context.StudentCourses
                 .Where(sc => sc.CourseId == vm.CourseId)
                 .Select(sc => sc.StudentId)
@@ -86,7 +90,7 @@ namespace Campus_Management_System.Controllers
                 {
                     StudentId = studentId,
                     CourseId = vm.CourseId,
-                    Date = vm.Date,
+                    Date = today,
                     IsPresent = isPresent
                 };
 
@@ -95,7 +99,7 @@ namespace Campus_Management_System.Controllers
 
             _context.SaveChanges();
 
-            TempData["Success"] = "Attendance saved successfully!";
+            TempData["Success"] = "Attendance saved!";
             return RedirectToAction("Index");
         }
 

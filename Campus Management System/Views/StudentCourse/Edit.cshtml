@@ -6,7 +6,7 @@
     <form asp-action="Edit" method="post">
 
         <input type="hidden" asp-for="StudentId" />
-        <input type="hidden" asp-for="CourseId" />
+        <input type="hidden" asp-for="OldCourseId" />
 
         <div class="mb-3">
             <label class="form-label">Student</label>
@@ -15,7 +15,10 @@
 
         <div class="mb-3">
             <label class="form-label">Select New Course</label>
-            <select asp-for="CourseId" asp-items="Model.Courses" class="form-control"></select>
+            <select asp-for="CourseId"
+                asp-items="Model.Courses"
+                class="form-control">
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>

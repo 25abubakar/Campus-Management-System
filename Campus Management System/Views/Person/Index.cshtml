@@ -21,148 +21,180 @@
         backdrop-filter: blur(5px);
         box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
-
-    .card h6 {
-        font-weight: 600;
-        opacity: 0.9;
-    }
-
-    .card h2 {
-        font-weight: bold;
-    }
 </style>
 
 <div class="container mt-4">
     <div class="container-fluid glass">
-    <div class="campus-bg">
+        <div class="campus-bg">
 
-       
+            <h2 class="text-center mb-4">
+                @(Model.Person.PersonId == 0 ? "Add Person" : "Edit Person")
+            </h2>
 
-    <h2 class="text-center mb-4">
-        @(Model.Person.PersonId == 0 ? "Add Person" : "Edit Person")
-    </h2>
+            <form asp-action="SavePerson" method="post">
+                @Html.AntiForgeryToken()
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success text-center">@TempData["Success"]</div>
-    }
+                <input type="hidden" asp-for="Person.PersonId" />
 
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger text-center">@TempData["Error"]</div>
-    }
+                <div class="row">
 
-    <form asp-action="SavePerson" method="post">
-        @Html.AntiForgeryToken()
+                    <div class="col-md-6 mb-3">
+                        <label>Name</label>
+                        <input asp-for="Person.Name" class="form-control" />
+                    </div>
 
-        <input type="hidden" asp-for="Person.PersonId" />
+                    <div class="col-md-6 mb-3">
+                        <label>Email</label>
+                        <input asp-for="Person.Email" class="form-control" />
+                    </div>
 
-        <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Phone</label>
+                        <input asp-for="Person.Phone" class="form-control" />
+                    </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Name</label>
-                <input asp-for="Person.Name" class="form-control" />
-            </div>
+                    <div class="col-md-6 mb-3">
+                        <label>City</label>
+                        <select asp-for="Person.City" id="cityDropdown" class="form-control">
+                            <option value="">Loading cities...</option>
+                        </select>
+                    </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Email</label>
-                <input asp-for="Person.Email" class="form-control" />
-            </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Date Of Birth</label>
+                        <input asp-for="Person.DOB" type="date" class="form-control" />
+                    </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Phone</label>
-                <input asp-for="Person.Phone" class="form-control" />
-            </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Age</label>
+                        <input asp-for="Person.Age" type="number" class="form-control" readonly />
+                    </div>
 
-            <div class="col-md-6 mb-3">
-                <label>City</label>
-                <input asp-for="Person.City" class="form-control" />
-            </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Gender</label><br />
+                        <input type="radio" asp-for="Person.Gender" value="Male" /> Male
+                        <input type="radio" asp-for="Person.Gender" value="Female" /> Female
+                        <input type="radio" asp-for="Person.Gender" value="Other" /> Other
+                    </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Date Of Birth</label>
-                <input asp-for="Person.DOB" id="dob" type="date" class="form-control" />
-            </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Role</label><br />
+                        <input type="radio" asp-for="Person.Role" value="Student" /> Student
+                        <input type="radio" asp-for="Person.Role" value="Teacher" /> Teacher
+                        <input type="radio" asp-for="Person.Role" value="SeniorTeacher" /> Senior Teacher
+                    </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Age</label>
-                <input asp-for="Person.Age" id="age" type="number" class="form-control" readonly />
-            </div>
+                </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Gender</label><br />
-                <input type="radio" asp-for="Person.Gender" value="Male" /> Male
-                <input type="radio" asp-for="Person.Gender" value="Female" /> Female
-                <input type="radio" asp-for="Person.Gender" value="Other" /> Other
-            </div>
+                <button class="btn btn-primary w-100">
+                    @(Model.Person.PersonId == 0 ? "Add Person" : "Update Person")
+                </button>
 
-            <div class="col-md-6 mb-3">
-                <label>Role</label><br />
-                <input type="radio" asp-for="Person.Role" value="Student" /> Student
-                <input type="radio" asp-for="Person.Role" value="Teacher" /> Teacher
-                <input type="radio" asp-for="Person.Role" value="SeniorTeacher" /> Senior Teacher
-            </div>
+            </form>
+
+            <hr />
+
+            <h3 class="mt-4">All Persons</h3>
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Age</th>
+                        <th>DOB</th>
+                        <th>Gender</th>
+                        <th>Role</th>
+                        <th>City</th>
+                        <th>Email</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.PersonsList)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Age</td>
+                            <td>@item.DOB?.ToString("yyyy-MM-dd")</td>
+                            <td>@item.Gender</td>
+                            <td>@item.Role</td>
+                            <td>@item.City</td>
+                            <td>@item.Email</td>
+
+                            <td>
+                                <a class="btn btn-sm btn-warning"
+                                   asp-action="Edit"
+                                   asp-route-id="@item.PersonId">Edit</a>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-sm btn-danger"
+                                       asp-action="Delete"
+                                       asp-route-id="@item.PersonId"
+                                       onclick="return confirm('Are you sure?');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
         </div>
+    </div>
+</div>
 
-        <button class="btn btn-primary w-100">
-            @(Model.Person.PersonId == 0 ? "Add Person" : "Update Person")
-        </button>
+<script>
+    var selectedCity = "@Model.Person.City";
+</script>
 
-    </form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        loadCities();
+    });
 
-    <hr />
+    function loadCities() {
 
-    <h3 class="mt-4">All Persons</h3>
+        fetch("https://countriesnow.space/api/v0.1/countries/cities", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                country: "Pakistan"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Age</th>
-                <th>DOB</th>
-                <th>Gender</th>
-                <th>Role</th>
-                <th>City</th>
-                <th>Email</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
+            let dropdown = document.getElementById("cityDropdown");
 
-        <tbody>
-            @foreach (var item in Model.PersonsList)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Phone</td>
-                    <td>@item.Age</td>
-                    <td>@item.DOB?.ToString("yyyy-MM-dd")</td>
-                    <td>@item.Gender</td>
-                    <td>@item.Role</td>
-                    <td>@item.City</td>
-                    <td>@item.Email</td>
+            dropdown.innerHTML = '<option value="">Select City</option>';
 
-                    <td>
-                        <a class="btn btn-sm btn-warning"
-                           asp-action="Edit"
-                           asp-route-id="@item.PersonId">Edit</a>
-                    </td>
+            if (data.data) {
 
-                    <td>
-                        <a class="btn btn-sm btn-danger"
-                               asp-action="Delete"
-                               asp-route-id="@item.PersonId"
-                               onclick="return confirm('Are you sure?');">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
+                data.data.forEach(city => {
+
+                    let option = document.createElement("option");
+                    option.value = city;
+                    option.text = city;
+
+                    dropdown.appendChild(option);
+                });
+
+                if (selectedCity) {
+                    dropdown.value = selectedCity;
+                }
             }
-        </tbody>
-    </table>
-
-</div>
-</div>
-</div>
+        })
+        .catch(error => {
+            console.log(error);
+            document.getElementById("cityDropdown").innerHTML =
+                '<option value="">Failed to load cities</option>';
+        });
+    }
+</script>

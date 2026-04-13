@@ -7,6 +7,7 @@ namespace Campus_Management_System.Models
     {
         public Course Course { get; set; } = new Course();
 
-        public List<Course>? CoursesList { get; set; }
+        public List<Course>? CoursesList { get; set; } = new List<Course>();
+
     }
 }

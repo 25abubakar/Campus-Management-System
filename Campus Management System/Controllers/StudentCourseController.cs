@@ -42,6 +42,7 @@ namespace Campus_Management_System.Controllers
 
             vm.StudentId = studentId;
             vm.CourseId = courseId;
+            vm.OldCourseId = courseId; 
             vm.StudentName = enrollment.Student.Person.Name;
 
             vm.Courses = _context.Courses
@@ -57,13 +58,14 @@ namespace Campus_Management_System.Controllers
         [HttpPost]
         public IActionResult Edit(StudentCourseEditVM vm)
         {
-            var enrollment = _context.StudentCourses
-                .FirstOrDefault(sc => sc.StudentId == vm.StudentId && sc.CourseId == vm.CourseId);
+            var oldEnrollment = _context.StudentCourses
+                .FirstOrDefault(sc => sc.StudentId == vm.StudentId
+                                   && sc.CourseId == vm.OldCourseId);
 
-            if (enrollment == null)
+            if (oldEnrollment == null)
                 return NotFound();
 
-            _context.StudentCourses.Remove(enrollment);
+            _context.StudentCourses.Remove(oldEnrollment);
             _context.SaveChanges();
 
             StudentCourse newEnrollment = new StudentCourse

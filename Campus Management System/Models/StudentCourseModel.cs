@@ -12,6 +12,6 @@ namespace Campus_Management_System.Models
         public int CourseId { get; set; }
         public Course? Course { get; set; }
 
-        public List<StudentCourse>? StudentsCourse { get; set; } = new List<StudentCourse>();
+        public List<StudentCourse>? StudentsCourse { get; set; }
     }
 }

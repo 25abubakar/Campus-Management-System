@@ -22,11 +22,11 @@ _____________
 Add, edit, delete, and view students
 Assign courses to students
 Track student records
----------------------------------------------------------------
+___________________________________________________________________
 👨‍🏫 Teacher Management:
 Manage teacher profiles
 Assign courses to teachers
----------------------------------------------------------------
+___________________________________________________________________
 📚 Course Management:
 Create and manage courses
 Assign courses to students and teachers
@@ -34,13 +34,13 @@ Assign courses to students and teachers
 Mark student attendance
 View attendance by course/date
 Filter attendance records
----------------------------------------------------------------
+___________________________________________________________________
 🔐 System Features:
 Clean MVC architecture
 TempData success/error messages
 Validation using Data Annotations
 Responsive UI with Bootstrap
----------------------------------------------------------------
+___________________________________________________________________
 🛠️ Tech Stack:
 ASP.NET Core MVC
 Entity Framework Core
@@ -48,21 +48,21 @@ SQL Server
 C#
 Bootstrap 5
 Razor Views
----------------------------------------------------------------
+___________________________________________________________________
 Clone the Repository:
 git clone https://github.com/your-username/campus-management-system.git
----------------------------------------------------------------
+___________________________________________________________________
 Update Your appsettings.json:
 "ConnectionStrings": {
   "DefaultConnection": "Server=YOUR_SERVER;Database=CampusDB;Trusted_Connection=True;"
 }
----------------------------------------------------------------
+___________________________________________________________________
 Migrations:
 Add-Migration InitialCreate
 Update-Database
----------------------------------------------------------------
+___________________________________________________________________
 Run Project F5 Or dotnet run
----------------------------------------------------------------
+___________________________________________________________________
 📜 License:
 This project is for educational purposes.
-
+___________________________________________________________________

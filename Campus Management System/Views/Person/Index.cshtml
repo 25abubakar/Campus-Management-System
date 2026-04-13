@@ -149,6 +149,44 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const dobInput = document.querySelector("[name='Person.DOB']");
+        const ageInput = document.querySelector("[name='Person.Age']");
+
+        dobInput.addEventListener("change", function () {
+            calculateAge();
+        });
+
+        function calculateAge() {
+
+            if (!dobInput.value) {
+                ageInput.value = "";
+                return;
+            }
+
+            const today = new Date();
+            const birthDate = new Date(dobInput.value);
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (
+                monthDiff < 0 ||
+                (monthDiff === 0 && today.getDate() < birthDate.getDate())
+            ) {
+                age--;
+            }
+
+            ageInput.value = age;
+        }
+
+        calculateAge();
+    });
+</script>
+
+<script>
     var selectedCity = "@Model.Person.City";
 </script>
 

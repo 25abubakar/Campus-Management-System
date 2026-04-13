@@ -21,6 +21,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SqlServer.Types" Version="170.1000.7" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
+    <PackageReference Include="Twilio" Version="7.14.3" />
   </ItemGroup>
 
 </Project>

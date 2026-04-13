@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Take Attendance";
+}
+
+<h2>📅 Take Attendance</h2>
+
+<form asp-action="LoadStudents" method="post">
+    <div class="mb-3">
+        <label>Course</label>
+        <select name="CourseId" class="form-control" required>
+            @foreach (var c in ViewBag.Courses)
+            {
+                <option value="@c.CourseId">@c.CourseName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Date</label>
+        <input type="date" name="Date" class="form-control" required />
+    </div>
+
+    <button class="btn btn-primary">Load Students</button>
+</form>

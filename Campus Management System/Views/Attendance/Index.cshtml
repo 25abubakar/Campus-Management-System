@@ -35,39 +35,31 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.Any())
-        {
-            int i = 1;
-            foreach (var a in Model)
-            {
-                <tr>
-                    <td>Student Id</td>
-                    <td>@a.Student.Person.Name
-                    <td>@a.Course.CourseName</td>
-                    <td>@a.Date.ToString("yyyy-MM-dd")</td>
-                    <td>
-                        @if (a.IsPresent)
-                        {
-                            <span class="badge badge-present">Present</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-absent">Absent</span>
-                        }
-                    </td>
-                </tr>
-                i++;
-            }
-        }
-        else
+        @foreach (var a in Model)
         {
             <tr>
-                <td colspan="5" class="text-center">No attendance records found.</td>
+                <td>@a.StudentId</td>
+                <td>@a.Student.Person.Name</td>
+                <td>@a.Course.CourseName</td>
+                <td>@a.Date.ToString("yyyy-MM-dd")</td>
+                <td>
+                    @if (a.IsPresent)
+                    {
+                        <span class="badge bg-success">Present</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Absent</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@a.AttendanceId"
+                       class="btn btn-sm btn-danger">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-
-<a asp-action="Create" class="btn btn-success mt-3">
+<a asp-action="TakeAttendance" class="btn btn-primary mt-3">
     ➕ Mark New Attendance
 </a>

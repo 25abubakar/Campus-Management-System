@@ -1,0 +1,52 @@
+﻿@model Campus_Management_System.Models.AttendanceVM
+
+<style>
+.student-card {
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #ddd;
+    cursor:pointer;
+    transition:.3s;
+    text-align:center;
+    font-weight:600;
+}
+.student-card:hover {
+    transform:scale(1.03);
+}
+.present {
+    background:#198754;
+    color:white;
+    border-color:#198754;
+}
+</style>
+
+<h2>📝 Click Students Who Are Present</h2>
+<p class="text-muted">Unselected students will be marked ABSENT automatically</p>
+
+<form asp-action="SaveAttendance" method="post">
+    <input type="hidden" asp-for="CourseId" />
+    <input type="hidden" asp-for="Date" />
+
+    <div class="row">
+        @foreach (var s in Model.Students)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="student-card" onclick="toggleStudent(this)">
+                    @s.StudentName
+                    <input type="checkbox" name="PresentStudentIds" 
+                           value="@s.StudentId" hidden />
+                </div>
+            </div>
+        }
+    </div>
+
+    <button class="btn btn-success mt-3">💾 Save Attendance</button>
+</form>
+
+<script>
+function toggleStudent(card) {
+    card.classList.toggle("present");
+    let checkbox = card.querySelector("input");
+    checkbox.checked = !checkbox.checked;
+}
+</script>

@@ -1,0 +1,47 @@
+﻿@model Campus_Management_System.Models.TeacherCourseAssignVM
+
+<div class="container mt-4">
+    <h2>Assign Course To Teacher</h2>
+
+    <form asp-action="Assign" method="post">
+
+        <input type="hidden" asp-for="TeacherId" />
+
+        <div class="mb-3">
+            <label class="form-label">Teacher</label>
+            <input class="form-control" value="@Model.TeacherName" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Qualification</label>
+            <input class="form-control" value="@Model.Qualification" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Salary</label>
+            <input class="form-control" value="@Model.Salary" readonly />
+        </div>
+
+        <hr />
+
+        <h4>Select Courses</h4>
+
+        @foreach (var course in Model.Courses)
+        {
+            <div class="form-check">
+                <input type="checkbox"
+                       name="SelectedCourses"
+                       value="@course.Value"
+                       class="form-check-input" />
+
+                <label class="form-check-label">@course.Text</label>
+            </div>
+        }
+
+        <br />
+
+        <button type="submit" class="btn btn-success">Assign Courses</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+
+    </form>
+</div>

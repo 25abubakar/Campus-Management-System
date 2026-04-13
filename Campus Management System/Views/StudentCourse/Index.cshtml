@@ -19,7 +19,8 @@
                 <th>Credit Hours</th>
                 <th>Fee</th>
                 <th>Edit</th>
-                <th>Delete</th> 
+                <th>Delete</th>
+                <th>Assign Course</th>
             </tr>
         </thead>
 
@@ -34,7 +35,14 @@
                     <td>@item.Course?.CourseName</td>
                     <td>@item.Course?.CreditHours</td>
                     <td>@item.Course?.Fee</td>
-
+                    <td>
+                        <a class="btn btn-sm btn-success"
+                               asp-controller="StudentCourse"
+                               asp-action="AssignCourse"
+                               asp-route-id="@item.StudentId">
+                            Assign Course
+                        </a>
+                    </td>
                     <td>
                         <a class="btn btn-sm btn-warning"
                                asp-action="Edit"

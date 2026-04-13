@@ -27,6 +27,61 @@ namespace Campus_Management_System.Controllers
             return View(enrollments);
         }
 
+        // OPEN Assign Course Page
+        public IActionResult AssignCourse(int id)
+        {
+            var student = _context.Students
+                .Include(s => s.Person)
+                .FirstOrDefault(s => s.StudentId == id);
+
+            if (student == null)
+                return NotFound();
+
+            StudentCourseAssignVM vm = new StudentCourseAssignVM
+            {
+                StudentId = student.StudentId,
+                StudentName = student.Person.Name,
+                RollNumber = student.RollNumber,
+                Class = student.Class,
+                Grade = student.Grade,
+
+                Courses = _context.Courses
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.CourseId.ToString(),
+                        Text = c.CourseName
+                    }).ToList()
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult AssignCourse(StudentCourseAssignVM vm)
+        {
+            foreach (var courseId in vm.SelectedCourses)
+            {
+                bool alreadyExists = _context.StudentCourses
+                    .Any(sc => sc.StudentId == vm.StudentId && sc.CourseId == courseId);
+
+                if (!alreadyExists)
+                {
+                    StudentCourse sc = new StudentCourse
+                    {
+                        StudentId = vm.StudentId,
+                        CourseId = courseId
+                    };
+
+                    _context.StudentCourses.Add(sc);
+                }
+            }
+
+            _context.SaveChanges();
+
+            TempData["Success"] = "Courses Assigned Successfully!";
+            return RedirectToAction("Index");
+        }
+
         // EDIT (open form)
         public IActionResult Edit(int studentId, int courseId)
         {

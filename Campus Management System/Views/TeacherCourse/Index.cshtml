@@ -1,8 +1,4 @@
-﻿@model List<Campus_Management_System.Models.TeacherCourse>
-
-@{
-    ViewData["Title"] = "Teacher Courses";
-}
+﻿@model Campus_Management_System.Models.TeacherCourseIndexVM
 
 <div class="container mt-4">
 
@@ -11,20 +7,19 @@
     <table class="table table-bordered table-striped mt-4">
         <thead class="table-dark">
             <tr>
-                <th>Teacher Name</th>
+                <th>Teacher</th>
                 <th>Email</th>
                 <th>Qualification</th>
                 <th>Salary</th>
-                <th>Course Name</th>
-                <th>Credit Hours</th>
-                <th>Fee</th>
-                <th>Update</th>
+                <th>Course</th>
+                <th>Assign</th>
+                <th>Edit</th>
                 <th>Delete</th>
             </tr>
         </thead>
 
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Enrollments)
             {
                 <tr>
                     <td>@item.Teacher?.Person?.Name</td>
@@ -32,26 +27,56 @@
                     <td>@item.Teacher?.Qualification</td>
                     <td>@item.Teacher?.Salary</td>
                     <td>@item.Course?.CourseName</td>
-                    <td>@item.Course?.CreditHours</td>
-                    <td>@item.Course?.Fee</td>
+
+                    <a class="btn btn-success btn-sm"
+                           asp-action="Assign"
+                           asp-route-id="@item.TeacherId">
+                        Assign Course
+                    </a>
+
                     <td>
-                        <a class="btn btn-sm btn-warning"
-                               asp-action="Edit"
-                               asp-route-teacherId="@item.TeacherId"
-                               asp-route-courseId="@item.CourseId">
-                            Edit
-                        </a>
+                        <a class="btn btn-warning btn-sm"
+                           asp-action="Edit"
+                           asp-route-teacherId="@item.TeacherId"
+                           asp-route-courseId="@item.CourseId">Edit</a>
                     </td>
+
                     <td>
-                        <a class="btn btn-sm btn-danger" asp-action="Delete"
-                               asp-route-teacherId="@item.TeacherId"
-                               asp-route-courseId="@item.CourseId"
-                            onclick="return confirm('Are you sure you want to delete this assignment?');">Delete
-                        </a>
+                        <a class="btn btn-danger btn-sm"
+                           asp-action="Delete"
+                           asp-route-teacherId="@item.TeacherId"
+                           asp-route-courseId="@item.CourseId">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    @if (Model.AssignVM != null)
+    {
+        <div class="card mt-5 p-4 shadow">
+            <h3>Assign Course To Teacher</h3>
+
+            <p><b>Name:</b> @Model.AssignVM.TeacherName</p>
+            <p><b>Qualification:</b> @Model.AssignVM.Qualification</p>
+            <p><b>Salary:</b> @Model.AssignVM.Salary</p>
+
+            <form asp-action="Assign" method="post">
+                <input type="hidden" name="TeacherId" value="@Model.AssignVM.TeacherId" />
+
+                @foreach (var course in Model.AssignVM.Courses)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" name="SelectedCourses"
+                               value="@course.Value" class="form-check-input" />
+                        <label class="form-check-label">@course.Text</label>
+                    </div>
+                }
+
+                <br />
+                <button class="btn btn-success">Assign Courses</button>
+            </form>
+        </div>
+    }
 
 </div>

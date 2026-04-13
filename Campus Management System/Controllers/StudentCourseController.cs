@@ -1,6 +1,8 @@
 ﻿using Campus_Management_System.Data;
 using Campus_Management_System.Data;
+using Campus_Management_System.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Campus_Management_System.Controllers
@@ -25,7 +27,59 @@ namespace Campus_Management_System.Controllers
             return View(enrollments);
         }
 
-    // Delete
+        // EDIT (open form)
+        public IActionResult Edit(int studentId, int courseId)
+        {
+            var enrollment = _context.StudentCourses
+                .Include(sc => sc.Student)
+                    .ThenInclude(s => s.Person)
+                .FirstOrDefault(sc => sc.StudentId == studentId && sc.CourseId == courseId);
+
+            if (enrollment == null)
+                return NotFound();
+
+            StudentCourseEditVM vm = new StudentCourseEditVM();
+
+            vm.StudentId = studentId;
+            vm.CourseId = courseId;
+            vm.StudentName = enrollment.Student.Person.Name;
+
+            vm.Courses = _context.Courses
+                .Select(c => new SelectListItem
+                {
+                    Value = c.CourseId.ToString(),
+                    Text = c.CourseName
+                }).ToList();
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(StudentCourseEditVM vm)
+        {
+            var enrollment = _context.StudentCourses
+                .FirstOrDefault(sc => sc.StudentId == vm.StudentId && sc.CourseId == vm.CourseId);
+
+            if (enrollment == null)
+                return NotFound();
+
+            _context.StudentCourses.Remove(enrollment);
+            _context.SaveChanges();
+
+            StudentCourse newEnrollment = new StudentCourse
+            {
+                StudentId = vm.StudentId,
+                CourseId = vm.CourseId
+            };
+
+            _context.StudentCourses.Add(newEnrollment);
+            _context.SaveChanges();
+
+            TempData["Success"] = "Course updated successfully!";
+            return RedirectToAction("Index");
+        }
+
+        // Delete
         public IActionResult Delete(int studentId, int courseId)
         {
             var enrollment = _context.StudentCourses.Find(studentId, courseId);

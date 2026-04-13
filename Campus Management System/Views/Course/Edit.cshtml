@@ -1,0 +1,27 @@
+﻿@model Campus_Management_System.Models.Course
+
+<div class="container mt-4">
+    <h2>Edit Course</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="CourseId" />
+
+        <div class="mb-3">
+            <label>Course Name</label>
+            <input asp-for="CourseName" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Credit Hours</label>
+            <input asp-for="CreditHours" type="number" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Fee</label>
+            <input asp-for="Fee" type="number" class="form-control" />
+        </div>
+
+        <button class="btn btn-primary">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>

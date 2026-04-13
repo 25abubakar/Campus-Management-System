@@ -1,0 +1,28 @@
+﻿@model Campus_Management_System.Models.TeacherCourseEditVM
+
+<div class="container mt-4">
+    <h2>Edit Teacher Course</h2>
+
+    <form asp-action="Edit" method="post">
+
+        <input type="hidden" asp-for="TeacherId" />
+        <input type="hidden" asp-for="OldCourseId" />
+
+        <div class="mb-3">
+            <label class="form-label">Teacher</label>
+            <input class="form-control" value="@Model.TeacherName" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Select New Course</label>
+            <select asp-for="CourseId"
+                    asp-items="Model.Courses"
+                    class="form-control">
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+
+    </form>
+</div>

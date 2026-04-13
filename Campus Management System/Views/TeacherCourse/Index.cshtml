@@ -35,9 +35,12 @@
                     <td>@item.Course?.CreditHours</td>
                     <td>@item.Course?.Fee</td>
                     <td>
-                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-teacherId="@item.TeacherId"
-                           asp-route-courseId="@item.CourseId"
-                           onclick="return confirm('Are you sure you want to Edit this assignment?');">Edit</a>
+                        <a class="btn btn-sm btn-warning"
+                               asp-action="Edit"
+                               asp-route-teacherId="@item.TeacherId"
+                               asp-route-courseId="@item.CourseId">
+                            Edit
+                        </a>
                     </td>
                     <td>
                         <a class="btn btn-sm btn-danger" asp-action="Delete"

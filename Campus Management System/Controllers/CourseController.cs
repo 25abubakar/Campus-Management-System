@@ -1,4 +1,4 @@
-﻿﻿using Campus_Management_System.Data;
+﻿using Campus_Management_System.Data;
 using Campus_Management_System.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +11,7 @@ public class CourseController : Controller
         _context = context;
     }
 
+    // LIST PAGE
     public IActionResult Index()
     {
         CourseEntryViewModel vm = new CourseEntryViewModel();
@@ -18,6 +19,7 @@ public class CourseController : Controller
         return View(vm);
     }
 
+    // CREATE
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(CourseEntryViewModel vm)
@@ -34,7 +36,32 @@ public class CourseController : Controller
         TempData["Success"] = "Course Added Successfully!";
         return RedirectToAction("Index");
     }
-    // Delete
+
+    // OPEN EDIT PAGE
+    public IActionResult Edit(int id)
+    {
+        var course = _context.Courses.Find(id);
+        if (course == null)
+            return NotFound();
+
+        return View(course);
+    }
+
+    // SAVE EDIT
+    [HttpPost]
+    public IActionResult Edit(Course course)
+    {
+        if (!ModelState.IsValid)
+            return View(course);
+
+        _context.Courses.Update(course);
+        _context.SaveChanges();
+
+        TempData["Success"] = "Course updated successfully!";
+        return RedirectToAction("Index");
+    }
+
+    // DELETE
     public IActionResult Delete(int id)
     {
         var course = _context.Courses.Find(id);
@@ -43,6 +70,7 @@ public class CourseController : Controller
 
         _context.Courses.Remove(course);
         _context.SaveChanges();
+
         TempData["Success"] = "Course deleted successfully!";
         return RedirectToAction("Index");
     }

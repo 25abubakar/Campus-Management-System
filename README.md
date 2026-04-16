@@ -50,7 +50,7 @@ Bootstrap 5
 Razor Views
 ___________________________________________________________________
 Clone the Repository:
-git clone https://github.com/your-username/campus-management-system.git
+git clone https://github.com/25Abubakar/campus-management-system.git
 ___________________________________________________________________
 Update Your appsettings.json:
 "ConnectionStrings": {
